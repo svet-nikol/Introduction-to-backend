@@ -2,15 +2,18 @@ const express = require('express');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const userRouter = require('./routers/users');
 const loggerOne = require('./middleware/loggerOne');
 const logMethodMiddleware = require('./middleware/logMethodMiddleware')
 
 dotenv.config();
 
-const app = express();
+const { PORT, API_URL, MONGO_URL } = process.env;
 
-const { PORT, API_URL } = process.env;
+mongoose.connect(MONGO_URL).catch(error => handleError(error));
+
+const app = express();
 
 const helloWorld = (req, res) => {
     res.status(200);

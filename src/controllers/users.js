@@ -1,19 +1,60 @@
-const getUsers = (req, res) => {};
+// const user = require('../models/user');
+const User = require('../models/user');
+
+const getUsers = (req, res) => {
+    User.find({})
+    .then(user => {
+        res.status(200).send(user);
+    })
+    .catch(e => {
+        res.status(500).send(e.message);
+    });
+};
 
 const getUser = (req, res) => {
   const { user_id } = req.params;
-  res.status(200);
-  res.send(`User with id: ${user_id}`);
+  User.findById(user_id)
+  .then(user => {
+      res.status(200).send(user);
+  })
+  .catch(e => {
+      res.status(500).send(e.message);
+  });
 };
 
 const createUser = (req, res) => {
-    res.status(201);
-    res.send(req.body);
+    const data = req.body;
+    User.create(data)
+    .then(user => {
+        res.status(201).send(user);
+    })
+    .catch(e => {
+        res.status(500).send(e.message);
+    });
 };
 
-const updateUser = (req, res) => {};
+const updateUser = (req, res) => {
+    const { user_id } = req.params;
+    const data = req.body;
+    User.findByIdAndUpdate(user_id, data, { new: true, runValidators: true})
+    .then(user => {
+        res.status(200).send(user);
+    })
+    .catch(e => {
+        res.status(500).send(e.message);
+    });
+};
 
-const deleteUser = (req, res) => {};
+const deleteUser = (req, res) => {
+    const { user_id } = req.params;
+    User.findByIdAndDelete(user_id)
+    .then(user => {
+        res.status(200).send('Done');
+    })
+    .catch(e => {
+        res.status(500).send(e.message);
+    });
+};
 
 module.exports = {
   getUsers,
