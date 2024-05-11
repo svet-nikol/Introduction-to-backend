@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Book = require("../models/book");
 
 const getUsers = (req, res) => {
-  User.find({})
+  User.find({}).populate("booklist")
     .then((user) => {
       res.status(200).send(user);
     })
@@ -13,7 +13,7 @@ const getUsers = (req, res) => {
 
 const getUser = (req, res) => {
   const { user_id } = req.params;
-  User.findById(user_id)
+  User.findById(user_id).populate("booklist")
     .then((user) => {
       res.status(200).send(user);
     })
@@ -36,7 +36,7 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
   const { user_id } = req.params;
   const data = req.body;
-  User.findByIdAndUpdate(user_id, data, { new: true, runValidators: true })
+  User.findByIdAndUpdate(user_id, data, { new: true, runValidators: true }).populate("booklist")
     .then((user) => {
       res.status(201).send(user);
     })
