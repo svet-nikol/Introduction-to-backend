@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require('./middleware/cors');
 const mongoose = require('mongoose');
 const userRouter = require('./routers/users');
 const bookRouter = require('./routers/books');
@@ -21,7 +21,7 @@ const helloWorld = (req, res) => {
     res.send("Hello World!");
 };
 
-app.use(cors());
+app.use(cors);
 app.use(loggerOne);
 app.use('/', logMethodMiddleware);
 app.get('/', (req, res) => {
