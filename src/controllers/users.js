@@ -1,4 +1,3 @@
-// const user = require('../models/user');
 const User = require('../models/user');
 
 const getUsers = (req, res) => {
@@ -38,7 +37,7 @@ const updateUser = (req, res) => {
     const data = req.body;
     User.findByIdAndUpdate(user_id, data, { new: true, runValidators: true})
     .then(user => {
-        res.status(200).send(user);
+        res.status(201).send(user);
     })
     .catch(e => {
         res.status(500).send(e.message);

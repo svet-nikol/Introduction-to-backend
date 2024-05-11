@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const userRouter = require('./routers/users');
+const bookRouter = require('./routers/books');
 const loggerOne = require('./middleware/loggerOne');
 const logMethodMiddleware = require('./middleware/logMethodMiddleware')
 
@@ -37,6 +38,7 @@ app.post("/", (req, res) => {
 });
 
 app.use(userRouter);
+app.use(bookRouter);
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен по адресу ${API_URL}:${PORT}`);
